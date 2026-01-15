@@ -8,4 +8,3 @@ env = {OPENROUTER_API_KEY = "${OPENROUTER_API_KEY}"}
 
 [config]
 num_trials = 5
-num_workers = 2
