@@ -1,0 +1,17 @@
+{
+  "image_digests": {
+    "green-agent": "ghcr.io/philipwzf/sentinel-agent@sha256:6100c468e7bb8422862c459c2ab7ff12f9f8fc39f321a08a10e665212b15457b",
+    "agent": "ghcr.io/philipwzf/purple_agent@sha256:708907db07525da6ab8166c4241fe4f0a75e3284e547b2b7d169fe07459e82e5",
+    "agentbeats-client": "ghcr.io/agentbeats/agentbeats-client@sha256:13dfe3ef4e583a80e7ce2fe3becd0ce3b879841368a7f4fa40b6ebbabeeb014e"
+  },
+  "timestamp": "2026-01-15T18:51:27Z",
+  "github_actions": {
+    "run_url": "https://github.com/philipwzf/sentinel-leaderboard/actions/runs/21042440008",
+    "run_logs_url": "https://api.github.com/repos/philipwzf/sentinel-leaderboard/actions/runs/21042440008/logs",
+    "ref": "refs/heads/test_pr",
+    "sha": "b813cb24cdea9fd716186b6fd3e6dc6324cf6409",
+    "repository_url": "https://github.com/philipwzf/sentinel-leaderboard",
+    "workflow_ref": "philipwzf/sentinel-leaderboard/.github/workflows/run-scenario.yml@refs/heads/test_pr",
+    "workflow_sha": "b813cb24cdea9fd716186b6fd3e6dc6324cf6409"
+  }
+}
