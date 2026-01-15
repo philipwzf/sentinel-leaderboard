@@ -7,4 +7,4 @@ name = "agent"
 env = {OPENROUTER_API_KEY = "${OPENROUTER_API_KEY}"}
 
 [config]
-num_trials = 3
+num_trials = 2
