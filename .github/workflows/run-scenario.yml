@@ -43,6 +43,9 @@ jobs:
       - name: Create output directory
         run: mkdir -p output && chmod 777 output
 
+      - name: Create SENTINEL logs directory
+        run: mkdir -p SENTINEL_code/logs && chmod -R 777 SENTINEL_code/logs
+
       - name: Export secrets as environment variables
         env:
           SECRETS_JSON: ${{ toJSON(secrets) }}
@@ -83,11 +86,23 @@ jobs:
           echo "unique_name=$UNIQUE_NAME" >> $GITHUB_OUTPUT
           echo "branch_name=submission-${UNIQUE_NAME}" >> $GITHUB_OUTPUT
 
+      - name: Copy CTL results from container
+        run: |
+          # Find the latest ctl_results file
+          CTL_FILE=$(ls -t SENTINEL_code/logs/trajectories/ai2thor-agent/examples/ctl_results_*.json 2>/dev/null | head -n 1 || echo "")
+          if [ -n "$CTL_FILE" ]; then
+            echo "Found CTL results: $CTL_FILE"
+            cp "$CTL_FILE" output/ctl_results.json
+          else
+            echo "Warning: No ctl_results file found"
+          fi
+
       - name: Copy files to submission directory
         run: |
           cp scenario.toml submissions/${{ steps.metadata.outputs.unique_name }}.toml
           cp output/results.json results/${{ steps.metadata.outputs.unique_name }}.json
           cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
+          cp output/ctl_results.json results/${{ steps.metadata.outputs.unique_name }}.ctl_results.json
 
       - name: Determine target repository
         id: target
@@ -108,7 +123,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add submissions/${{ steps.metadata.outputs.unique_name }}.toml submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json results/${{ steps.metadata.outputs.unique_name }}.json
+          git add submissions/${{ steps.metadata.outputs.unique_name }}.toml submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json results/${{ steps.metadata.outputs.unique_name }}.json results/${{ steps.metadata.outputs.unique_name }}.ctl_results.json
           git commit -m "Submission: ${{ steps.metadata.outputs.unique_name }}
 
           Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
