@@ -1,0 +1,11 @@
+[green_agent]
+agentbeats_id = "019bbdfb-e27d-7b91-bb25-053a3575f6b5"
+
+[[participants]]
+agentbeats_id = "019bbe04-29c1-7863-a5b3-d9481fa7cf14"
+name = "agent"
+env = {OPENROUTER_API_KEY = "${OPENROUTER_API_KEY}"}
+
+[config]
+num_trials = 2
+plan_batch_size=2
