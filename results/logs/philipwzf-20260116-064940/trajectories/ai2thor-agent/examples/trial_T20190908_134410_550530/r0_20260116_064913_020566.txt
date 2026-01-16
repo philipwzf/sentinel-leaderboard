@@ -1,0 +1,7 @@
+trial_id=trial_T20190908_134410_550530
+success=False
+completed_goal_conditions=0
+total_goal_conditions=4
+goal_condition_success_rate=0.000
+steps=7
+failures=5
