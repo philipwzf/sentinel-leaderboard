@@ -7,4 +7,5 @@ name = "agent"
 env = {OPENROUTER_API_KEY = "${OPENROUTER_API_KEY}"}
 
 [config]
-num_trials = 10
+num_trials = 2
+plan_batch_size=1
