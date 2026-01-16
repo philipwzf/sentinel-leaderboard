@@ -97,12 +97,24 @@ jobs:
             echo "Warning: No ctl_results file found"
           fi
 
+      - name: Copy trajectory logs from container
+        run: |
+          if [ -d SENTINEL_code/logs ]; then
+            cp -R SENTINEL_code/logs output/
+          else
+            echo "Warning: No logs directory found"
+          fi
+
       - name: Copy files to submission directory
         run: |
           cp scenario.toml submissions/${{ steps.metadata.outputs.unique_name }}.toml
           cp output/results.json results/${{ steps.metadata.outputs.unique_name }}.json
           cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
           cp output/ctl_results.json results/${{ steps.metadata.outputs.unique_name }}.ctl_results.json
+          if [ -d output/logs ]; then
+            mkdir -p results/logs/${{ steps.metadata.outputs.unique_name }}
+            cp -R output/logs/* results/logs/${{ steps.metadata.outputs.unique_name }}/
+          fi
 
       - name: Determine target repository
         id: target
@@ -123,7 +135,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add submissions/${{ steps.metadata.outputs.unique_name }}.toml submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json results/${{ steps.metadata.outputs.unique_name }}.json results/${{ steps.metadata.outputs.unique_name }}.ctl_results.json
+          git add submissions/${{ steps.metadata.outputs.unique_name }}.toml submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json results/${{ steps.metadata.outputs.unique_name }}.json results/${{ steps.metadata.outputs.unique_name }}.ctl_results.json results/logs/${{ steps.metadata.outputs.unique_name }}
           git commit -m "Submission: ${{ steps.metadata.outputs.unique_name }}
 
           Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
